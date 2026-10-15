@@ -20,7 +20,7 @@ namespace Ecommerce
 
             builder.Services.AddIdentity();
 
-            builder.Services.AddSwaggerDocumentation();
+            //builder.Services.AddSwaggerDocumentation();
             
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())

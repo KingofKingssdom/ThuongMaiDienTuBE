@@ -19,6 +19,22 @@ namespace Ecommerce.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>(b =>
+            {
+                b.HasMany(e => e.UserRoles)
+                 .WithOne(e => e.User)
+                 .HasForeignKey(ur => ur.UserId)
+                 .IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(b =>
+            {
+                b.HasMany(e => e.UserRoles)
+                 .WithOne(e => e.Role)
+                 .HasForeignKey(ur => ur.RoleId)
+                 .IsRequired();
+            });
         }
     }
 }
