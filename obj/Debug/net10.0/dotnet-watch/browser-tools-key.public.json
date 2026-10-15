@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "algorithm": "RSA-OAEP-SHA256",
+  "format": "SubjectPublicKeyInfo",
+  "publicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1tpoh5l1gM77ahMFcB/vuaHi4mL9W6oGyiqOOzs5HoYi62NKbPwpKq1KEdOVUgO/o/0wrSgzKZlRPxMptc\u002BxHP6dlfqPaPWH7M9CkDmY\u002B\u002BQksJmeSRZFBLpNPD4sycZdBK//IXMd/Z0Tsgsn5q2JeRkh\u002BI\u002BWZpx5pGL\u002BDp2IjqyZUvECGwRYgy\u002BivvhkUcAUfpXFWbjqBuJbJI4FgoskEisRuWHaFbZ3tK4p2QdKPSm6\u002BT84BsM1PR\u002BRkJCAdJm4qHmnC6G8DA7mydUxbYfImjCfM4U66qYRpP1jfbwCvsulS1Mm8ORYCDWYNus9NiNrz68oyyp5cagZGiFxKAk/iQIDAQAB"
+}
