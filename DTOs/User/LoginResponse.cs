@@ -1,0 +1,11 @@
+﻿namespace Ecommerce.DTOs.User
+{
+    public class LoginResponse
+    {
+        public string AccessToken { get; set; } = string.Empty;
+
+        public string RefreshToken { get; set; } = string.Empty;
+
+        public UserResponse User { get; set; } = default!;
+    }
+}

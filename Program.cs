@@ -20,8 +20,16 @@ namespace Ecommerce
 
             builder.Services.AddIdentity();
 
-            //builder.Services.AddSwaggerDocumentation();
-            
+            builder.Services.AddSwaggerDocumentation();
+
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+
+            builder.Services.AddControllers();
+
+            builder.Services.AddApplicationServices();
+
+            builder.Services.AddValidation();
+
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {

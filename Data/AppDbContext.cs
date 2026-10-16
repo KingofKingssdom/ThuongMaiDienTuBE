@@ -36,5 +36,6 @@ namespace Ecommerce.Data
                  .IsRequired();
             });
         }
+        public DbSet<RefreshToken> RefreshToken { set; get; }
     }
 }

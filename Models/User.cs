@@ -8,5 +8,7 @@ namespace Ecommerce.Models
         public string FullName { set; get; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public DateTime CreatedDay { set; get; } = DateTime.UtcNow;
+        public DateTime DeteledDay { set; get; }
     }
 }
