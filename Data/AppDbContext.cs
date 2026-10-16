@@ -35,7 +35,22 @@ namespace Ecommerce.Data
                  .HasForeignKey(ur => ur.RoleId)
                  .IsRequired();
             });
+            modelBuilder.Entity<CategoryBrand>()
+                .HasKey(cb => new { cb.BrandId, cb.CategoryId });
+
+            modelBuilder.Entity<CategoryBrand>()
+                .HasOne(cb => cb.Category)
+                .WithMany(c => c.CategoryBrand)
+                .HasForeignKey(cb => cb.CategoryId);
+
+            modelBuilder.Entity<CategoryBrand>()
+                .HasOne(cb => cb.Brand)
+                .WithMany(b => b.CategoryBrand)
+                .HasForeignKey(cb => cb.BrandId);
         }
         public DbSet<RefreshToken> RefreshToken { set; get; }
+        public DbSet<Category> Category { set; get; }
+        public DbSet<Brand> Brand { set; get; }
+
     }
 }

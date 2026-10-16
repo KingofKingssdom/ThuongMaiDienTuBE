@@ -37,7 +37,7 @@ namespace Ecommerce
 
                 await context.Database.MigrateAsync();
 
-                //await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
+               await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
             }
             // Configure the HTTP request pipeline.
             //if (!app.Environment.IsDevelopment())
