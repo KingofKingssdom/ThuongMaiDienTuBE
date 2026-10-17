@@ -8,5 +8,6 @@ namespace Ecommerce.Services.Interfaces
         Task<Result<CategoryResponse>> AddAsync(CreateCategoryRequest request,
             CancellationToken cancellationToken);
         Task<Result<List<CategoryResponse>>> GetAllAsync(CancellationToken cancellationToken);
+        
     }
 }

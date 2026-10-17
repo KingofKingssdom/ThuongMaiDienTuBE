@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Filters\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Utils\" />
     <Folder Include="Validators\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

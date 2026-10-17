@@ -51,6 +51,7 @@ namespace Ecommerce.Data
         public DbSet<RefreshToken> RefreshToken { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<Brand> Brand { set; get; }
+        public DbSet<Product> Product { set; get; }
 
     }
 }

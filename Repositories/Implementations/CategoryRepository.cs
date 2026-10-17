@@ -1,4 +1,5 @@
-﻿using Ecommerce.Data;
+﻿using Azure.Core;
+using Ecommerce.Data;
 using Ecommerce.Models;
 using Ecommerce.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,6 @@ namespace Ecommerce.Repositories.Implementations
             return await _context.Category.ToListAsync(cancellationToken);
 
         }
+       
     }
 }

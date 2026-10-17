@@ -87,6 +87,52 @@ namespace Ecommerce.Migrations
                     b.ToTable("CategoryBrand");
                 });
 
+            modelBuilder.Entity("Ecommerce.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeteledDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOnPromotion")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlImageProduct")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Product");
+                });
+
             modelBuilder.Entity("Ecommerce.Models.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -360,6 +406,25 @@ namespace Ecommerce.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Ecommerce.Models.Product", b =>
+                {
+                    b.HasOne("Ecommerce.Models.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Ecommerce.Models.RefreshToken", b =>
                 {
                     b.HasOne("Ecommerce.Models.User", "User")
@@ -429,11 +494,15 @@ namespace Ecommerce.Migrations
             modelBuilder.Entity("Ecommerce.Models.Brand", b =>
                 {
                     b.Navigation("CategoryBrand");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Category", b =>
                 {
                     b.Navigation("CategoryBrand");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Role", b =>

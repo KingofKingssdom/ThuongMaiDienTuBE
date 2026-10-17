@@ -6,5 +6,6 @@ namespace Ecommerce.Models
     {
         public string CategoryName { set; get; } = string.Empty;
         public ICollection<CategoryBrand> CategoryBrand { set; get; } = new List<CategoryBrand>();
+        public ICollection<Product> Products { set; get; } = new List<Product>();
     }
 }
