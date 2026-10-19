@@ -47,11 +47,22 @@ namespace Ecommerce.Data
                 .HasOne(cb => cb.Brand)
                 .WithMany(b => b.CategoryBrand)
                 .HasForeignKey(cb => cb.BrandId);
+
+            modelBuilder.Entity<SpecificationValue>()
+                .HasOne(p => p.SpecificationAttribute)
+                .WithMany(a => a.SpecificationValue)
+                .HasForeignKey(p => p.SpecificationAttributeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+           
         }
         public DbSet<RefreshToken> RefreshToken { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<Brand> Brand { set; get; }
         public DbSet<Product> Product { set; get; }
-
+        public DbSet<ProductVariant> ProductVariant { set; get; }
+        public DbSet<SpecificationGroup> SpecificationGroup { set; get; }
+        public DbSet<SpecificationValue> SpecificationValue { set; get; }
+        public DbSet<SpecificationAttribute> SpecificationAttribute { set; get; }
     }
 }

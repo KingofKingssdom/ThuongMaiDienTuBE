@@ -13,5 +13,9 @@ namespace Ecommerce.Models
         public Brand Brand { set; get; } = null!;
         public int CategoryId { set; get; }
         public Category Category { set; get; } = null!;
+        public ICollection<ProductVariant> ProductVariants { set; get; } 
+            = new List<ProductVariant>();
+        
+
     }
 }

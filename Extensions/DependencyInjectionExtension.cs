@@ -18,6 +18,10 @@ namespace Ecommerce.Extensions
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
+            services.AddScoped<ISpecificationGroupRepository, SpecificationGroupRepository>();
+            services.AddScoped<ISpecificationAttributeRepository, SpecificationAttributeRepository>();
+            services.AddScoped<ISpecificationValueRepository, SpecificationValueRepository>();
             //Service
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
@@ -25,6 +29,10 @@ namespace Ecommerce.Extensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductVariantService, ProductVariantService>();
+            services.AddScoped<ISpecificationGroupService, SpecificationGroupService>();
+            services.AddScoped<ISpecificationAttributeService, SpecificationAttributeService>();
+            services.AddScoped<ISpecificationValueService, SpecificationValueService>();
             services.AddScoped<ImageStorageUtil>();
             return services;
         }
