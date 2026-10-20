@@ -64,5 +64,10 @@ namespace Ecommerce.Data
         public DbSet<SpecificationGroup> SpecificationGroup { set; get; }
         public DbSet<SpecificationValue> SpecificationValue { set; get; }
         public DbSet<SpecificationAttribute> SpecificationAttribute { set; get; }
+        public DbSet<Cart> Cart { set; get; }
+        public DbSet<CartItem> CartItem { set; get; }
+        public DbSet<Order> Order { set; get; }
+        public DbSet<OrderItem> OrderItem { set; get; }
+
     }
 }

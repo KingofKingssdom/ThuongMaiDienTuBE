@@ -12,6 +12,7 @@ namespace Ecommerce.Services.Implementations
     public class AuthService: IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IJwtService _jwtService;
         private readonly AppDbContext _context;
@@ -21,9 +22,11 @@ namespace Ecommerce.Services.Implementations
             IRefreshTokenRepository refreshTokenRepository,
             IJwtService jwtService,
             AppDbContext context,
-            ILogger<AuthService> logger)
+            ILogger<AuthService> logger,
+            ICartRepository cartRepository)
         {
             _userRepository = userRepository;
+            _cartRepository = cartRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _jwtService = jwtService;
             _context = context;
@@ -49,8 +52,12 @@ namespace Ecommerce.Services.Implementations
             };
 
             await _userRepository.AddAsync(user, cancellationToken);
-
             _logger.LogInformation("User registered: {Email}", user.Email);
+            var cart = new Cart
+            {
+                UserId = user.Id,
+            };
+            await _cartRepository.AddAsync(cart, cancellationToken);
 
             return Result<UserResponse>.Success(new UserResponse
             {

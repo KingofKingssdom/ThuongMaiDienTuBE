@@ -22,6 +22,8 @@ namespace Ecommerce.Extensions
             services.AddScoped<ISpecificationGroupRepository, SpecificationGroupRepository>();
             services.AddScoped<ISpecificationAttributeRepository, SpecificationAttributeRepository>();
             services.AddScoped<ISpecificationValueRepository, SpecificationValueRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
             //Service
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
@@ -33,6 +35,7 @@ namespace Ecommerce.Extensions
             services.AddScoped<ISpecificationGroupService, SpecificationGroupService>();
             services.AddScoped<ISpecificationAttributeService, SpecificationAttributeService>();
             services.AddScoped<ISpecificationValueService, SpecificationValueService>();
+            services.AddScoped<ICartItemService, CartItemService>();
             services.AddScoped<ImageStorageUtil>();
             return services;
         }
