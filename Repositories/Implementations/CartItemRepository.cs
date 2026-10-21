@@ -47,5 +47,24 @@ namespace Ecommerce.Repositories.Implementations
         {
             await _context.SaveChangesAsync(cancellationToken);
         }
+       public async Task<List<CartItem>> GetAllCartItemByIdsAsync(
+           List<int> cartItemIds,
+           int cartId,
+           CancellationToken cancellationToken)
+        {
+           return await _context.CartItem
+                .Where(ci => cartItemIds.Contains(ci.Id) && ci.CartId == cartId)
+                .Include(ci => ci.ProductVariant)
+                .ThenInclude(p => p.Product)
+                .ToListAsync(cancellationToken);
+        }
+       public async Task DeleteCartItemByIdsAsync(
+            List<int> cartItemIds,
+            CancellationToken cancellationToken)
+        {
+                await _context.CartItem
+                    .Where(ci => cartItemIds.Contains(ci.Id))
+                    .ExecuteDeleteAsync(cancellationToken);
+        }
     }
 }

@@ -34,5 +34,10 @@ namespace Ecommerce.Repositories.Implementations
                 .Include(p => p.Product)
                 .ToListAsync();
         }
+       public async Task UpdateStockAsync(
+            CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -14,5 +14,12 @@ namespace Ecommerce.Repositories.Interfaces
         Task<List<CartItem>> GetAllByCartIdAsync(int cartId, 
             CancellationToken cancellationToken);
         Task UpdatePriceAtTimeAsync (CancellationToken cancellationToken);
+        Task<List<CartItem>> GetAllCartItemByIdsAsync(
+            List<int> cartItemIds, 
+            int cartId,
+            CancellationToken cancellationToken = default);
+        Task DeleteCartItemByIdsAsync(
+            List<int> cartItemIds,
+            CancellationToken cancellationToken = default);
     }
 }

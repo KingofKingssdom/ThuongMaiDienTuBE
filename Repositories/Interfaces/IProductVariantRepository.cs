@@ -11,6 +11,8 @@ namespace Ecommerce.Repositories.Interfaces
             CancellationToken cancellationToken = default);
         Task<List<ProductVariant>> GetAllAsync(
             CancellationToken cancellationToken = default);
+        Task UpdateStockAsync(
+            CancellationToken cancellationToken = default);
 
     }
 }

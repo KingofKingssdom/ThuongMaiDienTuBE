@@ -9,5 +9,6 @@ namespace Ecommerce.Services.Interfaces
             CancellationToken cancellationToken);
         Task<Result<List<CartItemResponse>>> GetAllByCartIdAsync(int userId,
             CancellationToken cancellationToken);
+        
     }
 }
