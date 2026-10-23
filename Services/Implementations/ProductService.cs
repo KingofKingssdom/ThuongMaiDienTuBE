@@ -111,6 +111,24 @@ namespace Ecommerce.Services.Implementations
                 } : null
             }).ToList());
         }
+        public async Task<Result<List<ProductResponse>>> GetAllByIsOnPromotion(CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetAllByOnPromotion(cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<List<ProductResponse>>.Failure("Not Found", ErrorType.None);
+            }
+            return Result<List<ProductResponse>>.Success(productExisting.Select(p => new ProductResponse
+            {
+                Id = p.Id,
+                ProductName = p.ProductName,
+                UrlImageProduct = p.UrlImageProduct,
+                Description = p.Description,
+                IsFeatured = p.IsFeatured,
+                IsOnPromotion = p.IsOnPromotion,
+                
+            }).ToList());
+        }
     }
 
 }

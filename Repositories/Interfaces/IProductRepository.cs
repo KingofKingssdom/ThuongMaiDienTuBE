@@ -7,5 +7,6 @@ namespace Ecommerce.Repositories.Interfaces
         Task<Product> AddAsync(Product product, CancellationToken cancellationToken = default);
         Task<List<Product>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<List<Product>> GetAllByOnPromotion(CancellationToken cancellationToken = default);
     }
 }

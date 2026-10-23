@@ -32,6 +32,12 @@ namespace Ecommerce.Repositories.Implementations
                 .Include(p=>p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
+       public async Task<List<Product>> GetAllByOnPromotion(CancellationToken cancellationToken)
+        {
+            return await _context.Product
+                .Where(p => p.IsOnPromotion == true)
+                .ToListAsync();
+        }
 
     }
 }

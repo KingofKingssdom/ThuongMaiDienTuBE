@@ -32,5 +32,12 @@ namespace Ecommerce.Controllers
             var result = await _productService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
+
+        [HttpGet("promotion")]
+        public async Task<IActionResult> GetAllByIsOnPromotion(CancellationToken cancellationToken)
+        {
+            var result = await _productService.GetAllByIsOnPromotion(cancellationToken);
+            return this.ToActionResult(result);
+        }
     }
 }
