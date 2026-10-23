@@ -30,6 +30,8 @@ namespace Ecommerce
 
             builder.Services.AddValidation();
 
+            builder.Services.AddConfigCORS();
+
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {
@@ -48,7 +50,7 @@ namespace Ecommerce
             //}
             app.UseSwagger();
             app.UseSwaggerUI();
-
+            app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
             app.UseRouting();
 
