@@ -39,6 +39,7 @@ namespace Ecommerce.Controllers
             var result = await _productService.GetAllByIsOnPromotion(cancellationToken);
             return this.ToActionResult(result);
         }
+
         [HttpGet("isfeature")]
         public async Task<IActionResult> GetAllIsFeature([FromQuery] int categoryId, CancellationToken cancellationToken)
         {
