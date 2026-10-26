@@ -9,5 +9,8 @@ namespace Ecommerce.Services.Interfaces
         Task<Result<ProductResponse>> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<Result<List<ProductResponse>>> GetAllAsync(CancellationToken cancellationToken);
         Task<Result<List<ProductResponse>>> GetAllByIsOnPromotion(CancellationToken cancellationToken);
+        Task<Result<List<ProductResponse>>> GetAllIsFeatured(
+            int categoryId, 
+            CancellationToken cancellationToken);
     }
 }

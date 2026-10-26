@@ -1,5 +1,6 @@
 ﻿using Ecommerce.DTOs.Brand;
 using Ecommerce.DTOs.Category;
+using Ecommerce.DTOs.ProductVariant;
 
 namespace Ecommerce.DTOs.Product
 {
@@ -13,5 +14,7 @@ namespace Ecommerce.DTOs.Product
         public bool IsOnPromotion { set; get; }
         public CategoryResponse? Category { set; get; }
         public BrandResponse? Brand { set; get; }
+        public List<ProductVariantResponse> ProductVariants { set; get; } 
+            = new List<ProductVariantResponse>();
     }
 }

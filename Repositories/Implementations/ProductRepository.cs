@@ -35,7 +35,17 @@ namespace Ecommerce.Repositories.Implementations
        public async Task<List<Product>> GetAllByOnPromotion(CancellationToken cancellationToken)
         {
             return await _context.Product
+                .Include(p => p.ProductVariants)
                 .Where(p => p.IsOnPromotion == true)
+                .ToListAsync();
+        }
+       public async Task<List<Product>> GetAllByIsFeatured(
+           int categoryId ,
+           CancellationToken cancellationToken)
+        {
+            return await _context.Product
+                .Include(p => p.ProductVariants)
+                .Where(p => p.IsFeatured && p.CategoryId == categoryId)
                 .ToListAsync();
         }
 

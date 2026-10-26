@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Common.Results;
 using Ecommerce.DTOs.Product;
+using Ecommerce.DTOs.ProductVariant;
 using Ecommerce.Models;
 using Ecommerce.Repositories.Interfaces;
 using Ecommerce.Services.Interfaces;
@@ -126,7 +127,45 @@ namespace Ecommerce.Services.Implementations
                 Description = p.Description,
                 IsFeatured = p.IsFeatured,
                 IsOnPromotion = p.IsOnPromotion,
-                
+                ProductVariants = p.ProductVariants.Select(v => new ProductVariantResponse
+                {
+                    Id = v.Id,
+                    Storage = v.Storage,
+                    OriginPrice = v.OriginPrice,
+                    CurrentPrice = v.CurrentPrice,
+                    Stock = v.Stock,
+                    UrlProductColor = v.UrlProductColor,
+                    ColorName = v.ColorName
+                }).ToList()
+            }).ToList());
+        }
+       public async Task<Result<List<ProductResponse>>> GetAllIsFeatured(
+           int categoryId 
+           ,CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetAllByIsFeatured(categoryId ,cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<List<ProductResponse>>.Failure("Not Found", ErrorType.None);
+            }
+            return Result<List<ProductResponse>>.Success(productExisting.Select(p => new ProductResponse
+            {
+                Id = p.Id,
+                ProductName = p.ProductName,
+                UrlImageProduct = p.UrlImageProduct,
+                Description = p.Description,
+                IsFeatured = p.IsFeatured,
+                IsOnPromotion = p.IsOnPromotion,
+                ProductVariants = p.ProductVariants.Select(v => new ProductVariantResponse
+                {
+                    Id = v.Id,
+                    Storage = v.Storage,
+                    OriginPrice = v.OriginPrice,
+                    CurrentPrice = v.CurrentPrice,
+                    Stock = v.Stock,
+                    UrlProductColor = v.UrlProductColor,
+                    ColorName = v.ColorName
+                }).ToList()
             }).ToList());
         }
     }
