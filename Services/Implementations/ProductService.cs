@@ -168,6 +168,65 @@ namespace Ecommerce.Services.Implementations
                 }).ToList()
             }).ToList());
         }
+        public async Task<Result<List<ProductResponse>>> GetAllByNameAsync(
+            string productName,
+            CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetAllByName(productName, cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<List<ProductResponse>>.Failure("Not Found", ErrorType.None);
+            }
+            return Result<List<ProductResponse>>.Success(productExisting.Select(p => new ProductResponse
+            {
+                Id = p.Id,
+                ProductName = p.ProductName,
+                UrlImageProduct = p.UrlImageProduct,
+                Description = p.Description,
+                IsFeatured = p.IsFeatured,
+                IsOnPromotion = p.IsOnPromotion,
+                ProductVariants = p.ProductVariants.Select(v => new ProductVariantResponse
+                {
+                    Id = v.Id,
+                    Storage = v.Storage,
+                    OriginPrice = v.OriginPrice,
+                    CurrentPrice = v.CurrentPrice,
+                    Stock = v.Stock,
+                    UrlProductColor = v.UrlProductColor,
+                    ColorName = v.ColorName
+                }).ToList()
+            }).ToList());
+        }
+       public async Task<Result<List<ProductResponse>>> GetAllByCategoryIdAndBrandId(
+            int categoryId,
+            int? brandId,
+            CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetAllByCategoryAndBrand(categoryId,brandId, cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<List<ProductResponse>>.Failure("Not Found", ErrorType.None);
+            }
+            return Result<List<ProductResponse>>.Success(productExisting.Select(p => new ProductResponse
+            {
+                Id = p.Id,
+                ProductName = p.ProductName,
+                UrlImageProduct = p.UrlImageProduct,
+                Description = p.Description,
+                IsFeatured = p.IsFeatured,
+                IsOnPromotion = p.IsOnPromotion,
+                ProductVariants = p.ProductVariants.Select(v => new ProductVariantResponse
+                {
+                    Id = v.Id,
+                    Storage = v.Storage,
+                    OriginPrice = v.OriginPrice,
+                    CurrentPrice = v.CurrentPrice,
+                    Stock = v.Stock,
+                    UrlProductColor = v.UrlProductColor,
+                    ColorName = v.ColorName
+                }).ToList()
+            }).ToList());
+        }
     }
 
 }

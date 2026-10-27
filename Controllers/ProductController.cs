@@ -46,5 +46,21 @@ namespace Ecommerce.Controllers
             var result = await _productService.GetAllIsFeatured(categoryId, cancellationToken);
             return this.ToActionResult(result);
         }
+        [HttpGet("search")]
+        public async Task<IActionResult> GetAllByName([FromQuery] string productName, CancellationToken cancellationToken)
+        {
+            var result = await _productService.GetAllByNameAsync(productName, cancellationToken);
+            return this.ToActionResult(result);
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetAllByCategoryAndBrand(
+            [FromQuery] int categoryId,
+            [FromQuery] int? brandId,
+            CancellationToken cancellationToken)
+        {
+            var result = await _productService.GetAllByCategoryIdAndBrandId(categoryId, brandId, cancellationToken);
+            return this.ToActionResult(result);
+        }
     }
 }

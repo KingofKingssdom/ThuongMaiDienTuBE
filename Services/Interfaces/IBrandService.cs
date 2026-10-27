@@ -8,5 +8,8 @@ namespace Ecommerce.Services.Interfaces
         Task<Result<BrandResponse>> AddAsync(CreateBrandRequest request, CancellationToken cancellationToken);
         Task<Result<BrandResponse>> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<Result<List<BrandResponse>>> GetAllAsync(CancellationToken cancellationToken);
+        Task<Result<List<BrandResponse>>> GetAllByCategoryId(
+            int categoryId, 
+            CancellationToken cancellationToken);
     }
 }

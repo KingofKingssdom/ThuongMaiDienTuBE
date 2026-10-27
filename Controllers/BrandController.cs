@@ -34,5 +34,12 @@ namespace Ecommerce.Controllers
             var result = await _brandService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
+        [HttpGet("category")]
+        public async Task<IActionResult> GetAllByCategoryId(int categoryId, 
+            CancellationToken cancellationToken)
+        {
+            var result = await _brandService.GetAllByCategoryId(categoryId, cancellationToken);
+            return this.ToActionResult(result);
+        }
     }
 }

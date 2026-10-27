@@ -48,6 +48,30 @@ namespace Ecommerce.Repositories.Implementations
                 .Where(p => p.IsFeatured && p.CategoryId == categoryId)
                 .ToListAsync();
         }
+       public async Task<List<Product>> GetAllByName(
+           string productName,
+           CancellationToken cancellationToken)
+        {
+            return await _context.Product
+                .Include(p => p.ProductVariants)
+                .Where(p => p.ProductName.Contains(productName))
+                .ToListAsync(cancellationToken);
+        }
+       public async Task<List<Product>> GetAllByCategoryAndBrand(int categoryId, int? brandId,
+            CancellationToken cancellationToken)
+        {
+            var query = _context.Product
+         .Include(p => p.ProductVariants)
+         .Where(p => p.CategoryId == categoryId)
+         .AsQueryable();
+
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == brandId.Value);
+            }
+
+            return await query.ToListAsync(cancellationToken);
+        }
 
     }
 }

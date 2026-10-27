@@ -12,5 +12,15 @@ namespace Ecommerce.Services.Interfaces
         Task<Result<List<ProductResponse>>> GetAllIsFeatured(
             int categoryId, 
             CancellationToken cancellationToken);
+        Task<Result<List<ProductResponse>>> GetAllByNameAsync(
+            string productName, 
+            CancellationToken cancellationToken);
+
+        Task<Result<List<ProductResponse>>> GetAllByCategoryIdAndBrandId(
+            int categoryId,
+            int? brandId,
+            CancellationToken cancellationToken);
+
+        
     }
 }

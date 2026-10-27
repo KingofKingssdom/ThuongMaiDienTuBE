@@ -11,5 +11,10 @@ namespace Ecommerce.Repositories.Interfaces
         Task<List<Product>> GetAllByIsFeatured(
             int categoryId, 
             CancellationToken cancellationToken = default);
+        Task<List<Product>> GetAllByName(
+            string productName, 
+            CancellationToken cancellationToken = default);
+        Task<List<Product>> GetAllByCategoryAndBrand(int categoryId, int? brandId,
+            CancellationToken cancellationToken = default);
     }
 }

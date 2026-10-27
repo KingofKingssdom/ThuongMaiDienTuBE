@@ -26,5 +26,13 @@ namespace Ecommerce.Repositories.Implementations
         {
             return await _context.Brand.ToListAsync(cancellationToken);
         }
+       public async Task<List<Brand>> GetByCagtegoryIdAsync(int categoryId,
+            CancellationToken cancellationToken)
+        {
+            return await _context.Brand
+                  .Where(b => b.CategoryBrand
+                     .Any(cb => cb.CategoryId == categoryId))
+                .ToListAsync(cancellationToken);
+        }
     }
 }

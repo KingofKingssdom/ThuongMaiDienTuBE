@@ -67,6 +67,24 @@ namespace Ecommerce.Services.Implementations
             var brandExisting = await _brandRepository.GetAllAsync(cancellationToken);
             return Result<List<BrandResponse>>.Success(brandExisting.Select(b => new BrandResponse
             {
+                Id = b.Id,
+                BrandName = b.BrandName,
+                UrlImageBrand = b.UrlImageBrand,
+                Category = b.CategoryBrand.Select(c => new CategoryResponse
+                {
+                    Id = c.Category.Id,
+                    CategoryName = c.Category.CategoryName
+                }).ToList()
+            }).ToList());
+        }
+       public async Task<Result<List<BrandResponse>>> GetAllByCategoryId(
+            int categoryId,
+            CancellationToken cancellationToken)
+        {
+            var brandExisting = await _brandRepository.GetByCagtegoryIdAsync(categoryId,cancellationToken);
+            return Result<List<BrandResponse>>.Success(brandExisting.Select(b => new BrandResponse
+            {
+                Id = b.Id,
                 BrandName = b.BrandName,
                 UrlImageBrand = b.UrlImageBrand,
                 Category = b.CategoryBrand.Select(c => new CategoryResponse
