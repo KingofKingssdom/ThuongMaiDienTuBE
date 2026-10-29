@@ -40,6 +40,10 @@ namespace Ecommerce.Controllers
             var result = await _authService.LoginAsync(
                 request,
                 cancellationToken);
+            if (result.IsSuccess)
+            {
+                SetRefreshTokenCookie(result.Value.RefreshToken);
+            }
 
             return this.ToActionResult(result);
         }
@@ -66,6 +70,19 @@ namespace Ecommerce.Controllers
                 cancellationToken);
 
             return this.ToActionResult(result);
+        }
+
+        private void SetRefreshTokenCookie(string refreshToken)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, 
+                SameSite = SameSiteMode.Strict, 
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
     }
 }
