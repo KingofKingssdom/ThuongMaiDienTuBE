@@ -26,5 +26,23 @@ namespace Ecommerce.Controllers
             var result = await _categoryService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
+        [HttpPatch("update")]
+        public async Task<IActionResult> UpdateAsync(
+            int id, 
+            CreateCategoryRequest request, 
+            CancellationToken cancellationToken)
+        {
+            var result = await _categoryService.UpdateAsync(id, request, cancellationToken);
+            return this.ToActionResult(result);
+        }
+
+        [HttpPut("delete")]
+        public async Task<IActionResult> DeleteAsync(
+            int id, 
+            CancellationToken cancellationToken)
+        {
+            var result = await _categoryService.DeleteAsync(id, cancellationToken);
+            return this.ToActionResult(result);
+        }
     }
 }

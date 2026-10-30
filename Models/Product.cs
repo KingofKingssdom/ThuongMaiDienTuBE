@@ -4,7 +4,7 @@ namespace Ecommerce.Models
 {
     public class Product: EntityBase
     {
-        public required string ProductName { set; get; }
+        public string ProductName { set; get; } = string.Empty;
         public string? Description { set; get; }
         public required string UrlImageProduct { set; get; }
         public bool IsFeatured { set; get; }

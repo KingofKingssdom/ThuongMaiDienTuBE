@@ -6,6 +6,7 @@ namespace Ecommerce.Repositories.Interfaces
     {
         Task<Category> AddCategoryAsync(Category category, CancellationToken cancellationToken = default);
         Task<List<Category>> GetAllCategories(CancellationToken cancellationToken = default);
-        
+        Task<Category?> GetById(int id, CancellationToken cancellationToken = default);
+        Task UpdateAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -42,5 +42,57 @@ namespace Ecommerce.Services.Implementations
                 CreatedDay = c.CreatedDay
             }).ToList());
         }
+       public async Task<Result<CategoryResponse>> GetByIdAsync(
+            int id,
+            CancellationToken cancellationToken)
+        {
+            var categoriesExisting = await _categoryRepository.GetById(id, cancellationToken);
+            if (categoriesExisting == null)
+            {
+                return Result<CategoryResponse>.Failure("Not found", ErrorType.NotFound);
+            }
+            return Result<CategoryResponse>.Success( new CategoryResponse
+            {
+                Id = categoriesExisting.Id,
+                CategoryName = categoriesExisting.CategoryName,
+                CreatedDay = categoriesExisting.CreatedDay
+            });
+        }
+       public async Task<Result<CategoryResponse>> UpdateAsync(
+            int id,
+            CreateCategoryRequest request,
+            CancellationToken cancellationToken)
+        {
+            var categoriesExisting = await _categoryRepository.GetById(id, cancellationToken);
+            if (categoriesExisting == null)
+            {
+                return Result<CategoryResponse>.Failure("Not found", ErrorType.NotFound);
+            }
+            categoriesExisting.CategoryName = request.CategoryName;
+            await _categoryRepository.UpdateAsync(cancellationToken);
+            return Result<CategoryResponse>.Success(new CategoryResponse
+            {
+                Id = categoriesExisting.Id,
+                CategoryName = categoriesExisting.CategoryName,
+                CreatedDay = categoriesExisting.CreatedDay
+            },"Data updated successfully");
+        }
+       public async Task<Result<CategoryResponse>> DeleteAsync(int id,
+            CancellationToken cancellationToken)
+        {
+            var categoriesExisting = await _categoryRepository.GetById(id, cancellationToken);
+            if (categoriesExisting == null)
+            {
+                return Result<CategoryResponse>.Failure("Not found", ErrorType.NotFound);
+            }
+            categoriesExisting.DeteledDay = DateTime.UtcNow;
+            await _categoryRepository.UpdateAsync(cancellationToken);
+             return Result<CategoryResponse>.Success(new CategoryResponse
+            {
+                Id = categoriesExisting.Id,
+                CategoryName = categoriesExisting.CategoryName,
+                CreatedDay = categoriesExisting.CreatedDay
+            }, "Data deleted successfully");
+        }
     }
 }

@@ -16,5 +16,7 @@ namespace Ecommerce.Repositories.Interfaces
             CancellationToken cancellationToken = default);
         Task<List<Product>> GetAllByCategoryAndBrand(int categoryId, int? brandId,
             CancellationToken cancellationToken = default);
+        Task UpdateAsync(CancellationToken cancellationToken = default);
+       
     }
 }

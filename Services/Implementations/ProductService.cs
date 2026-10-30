@@ -227,6 +227,96 @@ namespace Ecommerce.Services.Implementations
                 }).ToList()
             }).ToList());
         }
+
+       public async Task<Result<ProductResponse>> UpdateAsync(
+            int id,
+            UpdateProductRequest request,
+            CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetByIdAsync(id, cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<ProductResponse>.Failure("Not Found", ErrorType.NotFound);
+            }
+            productExisting.ProductName = request.ProductName;
+            productExisting.BrandId = request.BrandId;
+            productExisting.CategoryId = request.CategoryId;
+            productExisting.Description = request.Description;
+            productExisting.IsFeatured = productExisting.IsFeatured;
+            productExisting.IsOnPromotion = productExisting.IsOnPromotion;
+            if (request.UrlImageProduct != null && request.UrlImageProduct.Length > 0)
+            {
+                // Lưu lại đường dẫn ảnh cũ để chuẩn bị xóa
+                var oldImagePath = productExisting.UrlImageProduct;
+
+                // Upload ảnh mới
+                var newImageBrand = await _imageStorageUtil.UploadImage(request.UrlImageProduct, "Products");
+
+                // Gán ảnh mới cho entity
+               productExisting.UrlImageProduct = newImageBrand;
+
+                // Xóa ảnh cũ trên ổ đĩa (nếu có tồn tại đường dẫn cũ)
+                if (!string.IsNullOrEmpty(oldImagePath))
+                {
+                    _imageStorageUtil.DeleteImage(oldImagePath);
+                }
+            }
+            await _productRepository.UpdateAsync(cancellationToken);
+            return Result<ProductResponse>.Success(new ProductResponse
+            {
+                Id = productExisting.Id,
+                ProductName = productExisting.ProductName,
+                UrlImageProduct = productExisting.UrlImageProduct,
+                Description = productExisting.Description,
+                IsFeatured = productExisting.IsFeatured,
+                IsOnPromotion = productExisting.IsOnPromotion,
+                Brand = productExisting.Brand != null ? new BrandResponse
+                {
+                    Id = productExisting.Brand.Id,
+                    BrandName = productExisting.Brand.BrandName,
+                    UrlImageBrand = productExisting.Brand.UrlImageBrand
+                } : null,
+                Category = productExisting.Category != null ? new CategoryResponse
+                {
+                    Id = productExisting.Category.Id,
+                    CategoryName = productExisting.Category.CategoryName
+                } : null
+
+            }, "Data updated successfully");
+        }
+       public async Task<Result<ProductResponse>> DeleteAsync(
+            int id,
+            CancellationToken cancellationToken)
+        {
+            var productExisting = await _productRepository.GetByIdAsync(id, cancellationToken);
+            if (productExisting == null)
+            {
+                return Result<ProductResponse>.Failure("Not Found", ErrorType.NotFound);
+            }
+            productExisting.DeteledDay = DateTime.UtcNow;
+            await _productRepository.UpdateAsync(cancellationToken);
+            return Result<ProductResponse>.Success(new ProductResponse
+            {
+                Id = productExisting.Id,
+                ProductName = productExisting.ProductName,
+                UrlImageProduct = productExisting.UrlImageProduct,
+                Description = productExisting.Description,
+                IsFeatured = productExisting.IsFeatured,
+                IsOnPromotion = productExisting.IsOnPromotion,
+                Brand = productExisting.Brand != null ? new BrandResponse
+                {
+                    Id = productExisting.Brand.Id,
+                    BrandName = productExisting.Brand.BrandName,
+                    UrlImageBrand = productExisting.Brand.UrlImageBrand
+                } : null,
+                Category = productExisting.Category != null ? new CategoryResponse
+                {
+                    Id = productExisting.Category.Id,
+                    CategoryName = productExisting.Category.CategoryName
+                } : null
+
+            }, "Data deleted successfully");
+        }
     }
 
 }

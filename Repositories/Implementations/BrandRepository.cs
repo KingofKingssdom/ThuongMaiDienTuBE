@@ -34,5 +34,10 @@ namespace Ecommerce.Repositories.Implementations
                      .Any(cb => cb.CategoryId == categoryId))
                 .ToListAsync(cancellationToken);
         }
+       public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+      
     }
 }

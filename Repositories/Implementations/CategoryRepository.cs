@@ -24,6 +24,17 @@ namespace Ecommerce.Repositories.Implementations
             return await _context.Category.ToListAsync(cancellationToken);
 
         }
-       
+       public async Task<Category?> GetById(int id, CancellationToken cancellationToken)
+        {
+            
+            return await 
+                _context.Category
+                .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        }
+       public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

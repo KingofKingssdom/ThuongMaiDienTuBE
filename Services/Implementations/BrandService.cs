@@ -94,5 +94,65 @@ namespace Ecommerce.Services.Implementations
                 }).ToList()
             }).ToList());
         }
+       public async Task<Result<BrandResponse>> UpdateAsync(int id, CreateBrandRequest request, CancellationToken cancellationToken)
+        {
+            var brandExisting = await _brandRepository.GetByIdAsync(id, cancellationToken);
+            if (brandExisting == null)
+            {
+                return Result<BrandResponse>.Failure("Not found", Common.Enum.ErrorType.NotFound);
+            }
+            brandExisting.BrandName = request.BrandName;
+            if (request.UrlImageBrand != null && request.UrlImageBrand.Length > 0)
+            {
+                // Lưu lại đường dẫn ảnh cũ để chuẩn bị xóa
+                var oldImagePath = brandExisting.UrlImageBrand;
+
+                // Upload ảnh mới
+                var newImageBrand = await _imageStorageUtil.UploadImage(request.UrlImageBrand, "Brands");
+
+                // Gán ảnh mới cho entity
+                brandExisting.UrlImageBrand = newImageBrand;
+
+                // Xóa ảnh cũ trên ổ đĩa (nếu có tồn tại đường dẫn cũ)
+                if (!string.IsNullOrEmpty(oldImagePath))
+                {
+                    _imageStorageUtil.DeleteImage(oldImagePath);
+                }
+            }
+
+            await _brandRepository.UpdateAsync(cancellationToken);
+            return Result<BrandResponse>.Success(new BrandResponse
+            {
+                Id = brandExisting.Id,
+                BrandName = brandExisting.BrandName,
+                UrlImageBrand = brandExisting.UrlImageBrand,
+                Category = brandExisting.CategoryBrand.Select(c => new CategoryResponse
+                {
+                    Id = c.Category.Id,
+                    CategoryName = c.Category.CategoryName
+                }).ToList()
+            }, "Data updated successfully");
+
+        }
+       public async Task<Result<BrandResponse>> DeleteAsync(int id, CancellationToken cancellationToken)
+        {
+            var brandExisting = await _brandRepository.GetByIdAsync(id, cancellationToken);
+            if (brandExisting == null)
+            {
+                return Result<BrandResponse>.Failure("Not found", Common.Enum.ErrorType.NotFound);
+            }
+            brandExisting.DeteledDay = DateTime.UtcNow;
+            return Result<BrandResponse>.Success(new BrandResponse
+            {
+                Id = brandExisting.Id,
+                BrandName = brandExisting.BrandName,
+                UrlImageBrand = brandExisting.UrlImageBrand,
+                Category = brandExisting.CategoryBrand.Select(c => new CategoryResponse
+                {
+                    Id = c.Category.Id,
+                    CategoryName = c.Category.CategoryName
+                }).ToList()
+            }, "Data deleted successfully");
+        }
     }
 }

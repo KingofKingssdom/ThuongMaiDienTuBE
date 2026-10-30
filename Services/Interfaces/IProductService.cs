@@ -21,6 +21,13 @@ namespace Ecommerce.Services.Interfaces
             int? brandId,
             CancellationToken cancellationToken);
 
-        
+        Task<Result<ProductResponse>> UpdateAsync(
+            int id,
+            UpdateProductRequest request, 
+            CancellationToken cancellationToken);
+
+        Task<Result<ProductResponse>> DeleteAsync(
+            int id,
+            CancellationToken cancellationToken);
     }
 }

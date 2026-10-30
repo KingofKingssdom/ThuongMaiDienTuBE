@@ -72,6 +72,10 @@ namespace Ecommerce.Repositories.Implementations
 
             return await query.ToListAsync(cancellationToken);
         }
+       public async Task UpdateAsync(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
     }
 }
