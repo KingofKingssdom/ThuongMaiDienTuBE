@@ -20,18 +20,22 @@ namespace Ecommerce.Repositories.Implementations
         }
        public async Task<Brand?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.Brand.FirstOrDefaultAsync(b => b.Id == id);
+            return await _context.Brand
+                .Where(b=> b.DeteledDay == DateTime.MinValue)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
        public async Task<List<Brand>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Brand.ToListAsync(cancellationToken);
+            return await _context.Brand
+                .Where(b => b.DeteledDay == DateTime.MinValue)
+                .ToListAsync(cancellationToken);
         }
        public async Task<List<Brand>> GetByCagtegoryIdAsync(int categoryId,
             CancellationToken cancellationToken)
         {
             return await _context.Brand
                   .Where(b => b.CategoryBrand
-                     .Any(cb => cb.CategoryId == categoryId))
+                     .Any(cb => cb.CategoryId == categoryId) && b.DeteledDay == DateTime.MinValue)
                 .ToListAsync(cancellationToken);
         }
        public async Task UpdateAsync(CancellationToken cancellationToken)

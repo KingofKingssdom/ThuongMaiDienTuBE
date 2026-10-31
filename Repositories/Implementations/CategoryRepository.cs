@@ -21,15 +21,19 @@ namespace Ecommerce.Repositories.Implementations
         }
        public async Task<List<Category>> GetAllCategories(CancellationToken cancellationToken)
         {
-            return await _context.Category.ToListAsync(cancellationToken);
+            return await _context.Category
+                .Where(c => c.DeteledDay == DateTime.MinValue)
+                .ToListAsync(cancellationToken);
 
         }
        public async Task<Category?> GetById(int id, CancellationToken cancellationToken)
         {
-            
-            return await 
+
+            return await
                 _context.Category
+                .Where(c => c.DeteledDay == DateTime.MinValue)
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+                
         }
        public async Task UpdateAsync(CancellationToken cancellationToken)
         {

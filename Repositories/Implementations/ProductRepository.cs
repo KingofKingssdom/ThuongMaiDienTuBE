@@ -21,8 +21,9 @@ namespace Ecommerce.Repositories.Implementations
        public async Task<List<Product>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Product
+                .Where(p => p.DeteledDay == DateTime.MinValue)
                 .Include(p=> p.Brand)
-                .Include(p=>p.Category)
+                .Include(p=>p.Category) 
                 .ToListAsync();
         }
        public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -30,6 +31,7 @@ namespace Ecommerce.Repositories.Implementations
             return await _context.Product
                 .Include(p=> p.Brand)
                 .Include(p=>p.Category)
+                .Include(p => p.ProductVariants)
                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
        public async Task<List<Product>> GetAllByOnPromotion(CancellationToken cancellationToken)

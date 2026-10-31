@@ -80,9 +80,21 @@ namespace Ecommerce.Services.Implementations
                 {
                     Id = productExisting.Category.Id,
                     CategoryName = productExisting.Category.CategoryName
-                } : null
+                } : null,
+                ProductVariants = productExisting.ProductVariants != null
+            ? productExisting.ProductVariants.Select(v => new ProductVariantResponse
+            {
+                Id = v.Id,
+                Storage = v.Storage,
+                OriginPrice = v.OriginPrice,
+                CurrentPrice = v.CurrentPrice,
+                Stock = v.Stock,
+                ColorName = v.ColorName,
+                UrlProductColor = v.UrlProductColor
+            }).ToList()
+            : new List<ProductVariantResponse>()
 
-            }, "Data is retrieved successfully");
+            }, "Data is retrieved successfully"); 
         }
        public async Task<Result<List<ProductResponse>>> GetAllAsync(CancellationToken cancellationToken)
         {

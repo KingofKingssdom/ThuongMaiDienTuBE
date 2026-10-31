@@ -41,18 +41,18 @@ namespace Ecommerce.Controllers
             var result = await _brandService.GetAllByCategoryId(categoryId, cancellationToken);
             return this.ToActionResult(result);
         }
-        [HttpPatch ("update")]
+        [HttpPatch ("update/{id}")]
         public async Task<IActionResult> UpdateAsync(
-            int id, 
+            [FromRoute] int id, 
             CreateBrandRequest request,
             CancellationToken cancellationToken)
         {
             var result = await _brandService.UpdateAsync(id, request, cancellationToken);
             return this.ToActionResult(result);
         }
-        [HttpPut("delete")]
+        [HttpPut("delete/{id}")]
         public async Task<IActionResult> DeleteAsync(
-            int id,
+           [FromRoute] int id,
             CancellationToken cancellationToken)
         {
             var result = await _brandService.DeleteAsync(id, cancellationToken);

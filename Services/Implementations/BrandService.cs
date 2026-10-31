@@ -142,6 +142,7 @@ namespace Ecommerce.Services.Implementations
                 return Result<BrandResponse>.Failure("Not found", Common.Enum.ErrorType.NotFound);
             }
             brandExisting.DeteledDay = DateTime.UtcNow;
+            await _brandRepository.UpdateAsync(cancellationToken);
             return Result<BrandResponse>.Success(new BrandResponse
             {
                 Id = brandExisting.Id,

@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Repositories.Interfaces
 {
@@ -13,6 +14,10 @@ namespace Ecommerce.Repositories.Interfaces
             CancellationToken cancellationToken = default);
         Task UpdateStockAsync(
             CancellationToken cancellationToken = default);
-
+        Task UpdateAsync(CancellationToken cancellationToken = default);
+        Task<List<ProductVariant>> GetByProductId(
+             int productId,
+             CancellationToken cancellationToken = default);
+        
     }
 }

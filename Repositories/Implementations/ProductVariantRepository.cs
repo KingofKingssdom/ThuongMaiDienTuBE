@@ -39,5 +39,19 @@ namespace Ecommerce.Repositories.Implementations
         {
             await _context.SaveChangesAsync();
         }
+       public async Task UpdateAsync(
+           CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync();
+        }
+        public async Task<List<ProductVariant>> GetByProductId(
+            int productId, 
+            CancellationToken cancellationToken)
+        {
+           return await _context.ProductVariant
+                .Where(pv => pv.ProductId == productId && pv.DeteledDay == DateTime.MinValue)
+                .Include(p => p.Product)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

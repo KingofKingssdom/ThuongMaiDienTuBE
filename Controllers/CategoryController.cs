@@ -26,9 +26,9 @@ namespace Ecommerce.Controllers
             var result = await _categoryService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
-        [HttpPatch("update")]
+        [HttpPatch("update/{id}")]
         public async Task<IActionResult> UpdateAsync(
-            int id, 
+           [FromRoute] int id, 
             CreateCategoryRequest request, 
             CancellationToken cancellationToken)
         {
@@ -36,9 +36,9 @@ namespace Ecommerce.Controllers
             return this.ToActionResult(result);
         }
 
-        [HttpPut("delete")]
+        [HttpPut("delete/{id}")]
         public async Task<IActionResult> DeleteAsync(
-            int id, 
+           [FromRoute] int id, 
             CancellationToken cancellationToken)
         {
             var result = await _categoryService.DeleteAsync(id, cancellationToken);
