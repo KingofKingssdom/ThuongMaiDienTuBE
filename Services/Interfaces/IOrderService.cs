@@ -9,5 +9,8 @@ namespace Ecommerce.Services.Interfaces
             int userId,
             CreateOrderRequest request,
             CancellationToken cancellationToken);
+        Task<Result<List<OrderResponse>>> GetAllByUserIdAsync(
+            int userId,
+            CancellationToken cancellationToken);
     }
 }

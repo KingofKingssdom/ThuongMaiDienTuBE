@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Common.Enum;
 using Ecommerce.Common.Results;
 using Ecommerce.DTOs.Order;
+using Ecommerce.DTOs.OrderItem;
 using Ecommerce.Models;
 using Ecommerce.Repositories.Interfaces;
 using Ecommerce.Services.Interfaces;
@@ -128,6 +129,46 @@ namespace Ecommerce.Services.Implementations
                 Note = order.Note,
 
             });
+        }
+
+        public async Task<Result<List<OrderResponse>>> GetAllByUserIdAsync(
+            int userId,
+            CancellationToken cancellationToken)
+        {
+            var orderExisting = await _orderRepository.GetAllOrderByUserId(userId, cancellationToken);
+            if(orderExisting == null)
+            {
+                return Result<List<OrderResponse>>.Failure("Not found", ErrorType.NotFound);
+            }
+            return Result<List<OrderResponse>>.Success(orderExisting.Select(o => new OrderResponse
+            {
+                Id = o.Id,
+                OrderCode = o.OrderCode,
+                SubTotal = o.SubTotal,
+                DiscountAmount = o.DiscountAmount,
+                ShippingFee = o.ShippingFee,
+                GrandTotal = o.GrandTotal,
+                OrderStatus = o.OrderStatus,
+                PaymentMethod = o.PaymentMethod,
+                PaymentStatus = o.PaymentStatus,
+                ReceiverName = o.ReceiverName,
+                ReceiverPhone = o.ReceiverPhone,
+                ReceiverAddress = o.ReceiverAddress,
+                Note = o.Note,
+                OrderItems = o.OrderItems != null
+            ? o.OrderItems.Select(item => new OrderItemResponse
+            {
+                ProductVariantId = item.ProductVariantId,
+                ColorName = item.ProductVariant.ColorName,
+                Storage = item.ProductVariant.Storage,
+                UrlProductColor = item.ProductVariant.UrlProductColor,
+                Quantity = item.Quantity,
+                PriceAtTime = item.PriceAtTime,
+                TotalPrice = item.TotalPrice
+            }).ToList()
+            : new List<OrderItemResponse>()
+        }).ToList());
+            
         }
     }
 }

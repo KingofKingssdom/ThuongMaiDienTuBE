@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Common.Enum;
+using Ecommerce.DTOs.OrderItem;
 using Ecommerce.Models;
 
 namespace Ecommerce.DTOs.Order
@@ -19,5 +20,6 @@ namespace Ecommerce.DTOs.Order
         public string ReceiverPhone { set; get; } = string.Empty;
         public string ReceiverAddress { set; get; } = string.Empty;
         public string Note { set; get; } = string.Empty;
+        public List<OrderItemResponse> OrderItems { set; get; } = new List<OrderItemResponse>();
     }
 }

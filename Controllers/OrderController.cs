@@ -29,5 +29,14 @@ namespace Ecommerce.Controllers
             var result = await _orderService.AddAsync(user.Value.Id, request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllByUserIdAsync(CancellationToken cancellationToken)
+        {
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int num = int.Parse(UserId);
+            var user = await _userService.GetByIdAsync(num);
+            var result = await _orderService.GetAllByUserIdAsync(user.Value.Id, cancellationToken);
+            return this.ToActionResult(result);
+        }
     }
 }

@@ -19,5 +19,16 @@ namespace Ecommerce.Repositories.Implementations
                 await _context.SaveChangesAsync();
                 return order;  
         }
+        public async Task<List<Order>> GetAllOrderByUserId(
+            int userId,
+            CancellationToken cancellationToken)
+        {
+          return  await _context.Order
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.ProductVariant)
+                .Where(o => o.UserId == userId)
+                .ToListAsync(cancellationToken);
+                
+        }
     }
 }
