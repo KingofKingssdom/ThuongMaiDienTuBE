@@ -1,6 +1,7 @@
 ﻿using Ecommerce.DTOs.Category;
 using Ecommerce.Extensions;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers
@@ -14,18 +15,21 @@ namespace Ecommerce.Controllers
         {
             _categoryService = categoryService;
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await _categoryService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _categoryService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPatch("update/{id}")]
         public async Task<IActionResult> UpdateAsync(
            [FromRoute] int id, 
@@ -35,7 +39,7 @@ namespace Ecommerce.Controllers
             var result = await _categoryService.UpdateAsync(id, request, cancellationToken);
             return this.ToActionResult(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("delete/{id}")]
         public async Task<IActionResult> DeleteAsync(
            [FromRoute] int id, 

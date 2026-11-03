@@ -1,6 +1,7 @@
 ﻿using Ecommerce.DTOs.Brand;
 using Ecommerce.Extensions;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers
@@ -14,6 +15,7 @@ namespace Ecommerce.Controllers
         {
             _brandService = brandService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromForm] CreateBrandRequest request,
             CancellationToken cancellationToken)
@@ -21,19 +23,22 @@ namespace Ecommerce.Controllers
             var result = await _brandService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
-
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _brandService.GetByIdAsync(id, cancellationToken);
             return this.ToActionResult(result);
         }
+
+        [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _brandService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("category")]
         public async Task<IActionResult> GetAllByCategoryId(int categoryId, 
             CancellationToken cancellationToken)
@@ -41,6 +46,7 @@ namespace Ecommerce.Controllers
             var result = await _brandService.GetAllByCategoryId(categoryId, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPatch ("update/{id}")]
         public async Task<IActionResult> UpdateAsync(
             [FromRoute] int id, 
@@ -50,6 +56,7 @@ namespace Ecommerce.Controllers
             var result = await _brandService.UpdateAsync(id, request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut("delete/{id}")]
         public async Task<IActionResult> DeleteAsync(
            [FromRoute] int id,

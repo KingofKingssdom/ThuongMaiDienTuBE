@@ -1,6 +1,7 @@
 ﻿
 using Ecommerce.Config;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -20,7 +21,7 @@ namespace Ecommerce.Controllers
             _paymentService = paymentService;
             _vnpayConfig = vnpayConfig;
         }
-
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("checkout/vnpay/{orderId}")]
         public async Task<IActionResult> Checkout(int orderId)
         {
@@ -35,7 +36,7 @@ namespace Ecommerce.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("result-vnpay")]
         public async Task<IActionResult> Result(CancellationToken cancellationToken)
         {

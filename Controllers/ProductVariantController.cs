@@ -1,6 +1,7 @@
 ﻿using Ecommerce.DTOs.ProductVariant;
 using Ecommerce.Extensions;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers
@@ -14,6 +15,7 @@ namespace Ecommerce.Controllers
         {
             _productVariantService = productVariantService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddAsync(
           [FromForm]  CreateProductVariantRequest request,
@@ -22,6 +24,7 @@ namespace Ecommerce.Controllers
             var result = await _productVariantService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id,
             CancellationToken cancellationToken)
@@ -29,13 +32,14 @@ namespace Ecommerce.Controllers
             var result = await _productVariantService.GetByIdAsync(id, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _productVariantService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPatch("update/{id}")]
         public async Task<IActionResult> UpdateAsync(
           [FromRoute]  int id, 
@@ -45,7 +49,7 @@ namespace Ecommerce.Controllers
             var result = await _productVariantService.UpdateAsync(id, request, cancellationToken);
             return this.ToActionResult(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("delete/{id}")]        
         public async Task<IActionResult> DeleteAsync(
            [FromRoute] int id,
@@ -54,6 +58,7 @@ namespace Ecommerce.Controllers
             var result = await _productVariantService.DeleteAsync(id, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("product/{productId}")]
         public async Task<IActionResult> GetByProductIdAsync([FromRoute] int productId,
             CancellationToken cancellationToken)

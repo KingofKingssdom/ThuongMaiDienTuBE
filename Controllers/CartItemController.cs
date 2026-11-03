@@ -3,6 +3,7 @@ using Ecommerce.DTOs.User;
 using Ecommerce.Extensions;
 using Ecommerce.Models;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -20,6 +21,7 @@ namespace Ecommerce.Controllers
             _cartItemService = cartItemService;
             _userService = userService;
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> AddAsync(CreateCartItemRequest request, 
             CancellationToken cancellationToken)
@@ -30,6 +32,7 @@ namespace Ecommerce.Controllers
             var result = await _cartItemService.AddAsync(user.Value.Id, request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<IActionResult> GetAllByCartIdAsync(CancellationToken cancellationToken)
         {

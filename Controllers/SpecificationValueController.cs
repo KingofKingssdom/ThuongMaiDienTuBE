@@ -1,6 +1,7 @@
 ﻿using Ecommerce.DTOs.SpecificationValue;
 using Ecommerce.Extensions;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers
@@ -14,6 +15,7 @@ namespace Ecommerce.Controllers
         {
             _specificationValueService = specificationValueService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] CreateSpecificationValueRequest request,
             CancellationToken cancellationToken)
@@ -21,12 +23,14 @@ namespace Ecommerce.Controllers
             var result = await _specificationValueService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _specificationValueService.GetByIdAsync(id, cancellationToken);
             return this.ToActionResult(result);
         }
+        [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
