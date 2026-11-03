@@ -27,6 +27,7 @@ namespace Ecommerce.Extensions
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
             //Service
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JwtService>();
@@ -43,6 +44,7 @@ namespace Ecommerce.Extensions
             services.AddScoped<ImageStorageUtil>();
             services.AddScoped<VNPayService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IDashboardService, DashboardService>();
             return services;
         }
     }

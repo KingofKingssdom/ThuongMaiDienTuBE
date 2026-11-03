@@ -22,42 +22,42 @@ namespace Ecommerce.Controllers
             var result = await _productService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _productService.GetByIdAsync(id, cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _productService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("promotion")]
         public async Task<IActionResult> GetAllByIsOnPromotion(CancellationToken cancellationToken)
         {
             var result = await _productService.GetAllByIsOnPromotion(cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("isfeature")]
         public async Task<IActionResult> GetAllIsFeature([FromQuery] int categoryId, CancellationToken cancellationToken)
         {
             var result = await _productService.GetAllIsFeatured(categoryId, cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> GetAllByName([FromQuery] string productName, CancellationToken cancellationToken)
         {
             var result = await _productService.GetAllByNameAsync(productName, cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("filter")]
         public async Task<IActionResult> GetAllByCategoryAndBrand(
             [FromQuery] int categoryId,

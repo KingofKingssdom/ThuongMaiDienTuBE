@@ -23,7 +23,7 @@ namespace Ecommerce.Controllers
             var result = await _brandService.AddAsync(request, cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, CancellationToken cancellationToken)
         {
@@ -31,14 +31,14 @@ namespace Ecommerce.Controllers
             return this.ToActionResult(result);
         }
 
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _brandService.GetAllAsync(cancellationToken);
             return this.ToActionResult(result);
         }
-        [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("category")]
         public async Task<IActionResult> GetAllByCategoryId(int categoryId, 
             CancellationToken cancellationToken)
