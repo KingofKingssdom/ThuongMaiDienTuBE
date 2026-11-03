@@ -1,3 +1,4 @@
+using Ecommerce.Config;
 using Ecommerce.Data;
 using Ecommerce.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,11 @@ namespace Ecommerce
             builder.Services.AddValidation();
 
             builder.Services.AddConfigCORS();
-
+            builder.Services.Configure<VNPayConfig>(
+          builder.Configuration.GetSection("VNPayConfig")
+          );
+            var vnpaySettings = builder.Configuration.GetSection("VNPayConfig").Get<VNPayConfig>();
+            builder.Services.AddSingleton(vnpaySettings);
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {
