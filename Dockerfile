@@ -21,4 +21,6 @@ EXPOSE 8080
 COPY --from=publish /app/publish .
 
 ENV ASPNETCORE_URLS=http://+:8080
+# Tạo sẵn thư mục Images trong container để tránh lỗi không tìm thấy đường dẫn
+RUN mkdir -p /app/Images
 ENTRYPOINT ["dotnet", "Ecommerce.dll"]
